@@ -7,6 +7,7 @@ import {
   ScrollRestoration,
 } from "react-router";
 import { AuthProvider } from "./auth/auth";
+import { UserProvider } from "./user/user";
 
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -45,7 +46,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <AuthProvider>
-      <Outlet />
+      <UserProvider>
+        <Outlet />
+      </UserProvider>
     </AuthProvider>
   );
 }

@@ -15,11 +15,11 @@ export function Connexion() {
       const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({ username: email, password }),
       });
       if (response.ok) {
-        login();
+        const data = await response.json();
+        login(data.token);
       } else {
         alert("Erreur de connexion");
       }
