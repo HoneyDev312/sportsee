@@ -1,20 +1,11 @@
-import { useNavigate } from "react-router";
-
-const deleteCookie = (name: string) => {
-  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;`; 
-};
+import { useAuth } from "../auth/auth";
 
 export function Dashboard() {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    deleteCookie("authToken");
-    navigate("/");
-  };
+  const { logout } = useAuth();
 
   return (
     <div>
-      <button type="button" onClick={handleLogout}>
+      <button type="button" onClick={logout}>
         Déconnexion
       </button>
       <div>Dashboard</div>

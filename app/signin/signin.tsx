@@ -2,18 +2,12 @@ import "./signin.css";
 import runnersImg from "./assets/runners.jpg";
 import logo from "./assets/logo.svg";
 import { useState } from "react";
-import { useNavigate } from "react-router";
-
-const setCookie = (name: string, value: string, days: number) => {
-  const expires = new Date();
-  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
-};
+import { useAuth } from "../auth/auth";
 
 export function Connexion() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,12 +15,11 @@ export function Connexion() {
       const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ username: email, password }),
       });
       if (response.ok) {
-        const data = await response.json();
-        setCookie("authToken", data.token, 7);
-        navigate("/dashboard");
+        login();
       } else {
         alert("Erreur de connexion");
       }
