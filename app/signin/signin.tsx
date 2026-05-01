@@ -1,16 +1,21 @@
 import "./signin.css";
 import runnersImg from "./assets/runners.jpg";
-import logo from "./assets/logo.svg";
 import { useState } from "react";
 import { useAuth } from "../auth/auth";
+import { Logo } from "~/components/logo/logo";
 
 export function Connexion() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+  const isFormValid = email.trim() !== "" && password.trim() !== "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isFormValid) {
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:8000/api/login", {
         method: "POST",
@@ -34,11 +39,8 @@ export function Connexion() {
       <main className="auth-page">
         <section className="auth-left" aria-labelledby="auth-title">
           <header className="auth-brand">
-            <a href="/" className="brand-link" aria-label="Retour à l'accueil">
-              <img src={logo} alt="SportSee" />
-            </a>
+            <Logo />
           </header>
-
           <article className="auth-card">
             <h1 id="auth-title">Transformez vos stats en résultats</h1>
             <h2>Se connecter</h2>
@@ -70,7 +72,9 @@ export function Connexion() {
                 />
               </div>
 
-              <button type="submit">Se connecter</button>
+              <button type="submit" disabled={!isFormValid}>
+                Se connecter
+              </button>
             </form>
 
             <a href="/forgot-password" className="forgot-link">

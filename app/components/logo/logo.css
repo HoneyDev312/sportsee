@@ -1,0 +1,70 @@
+@keyframes iconDefaultAnimation {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  0% {
+    opacity: 1;
+  }
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-0.5px);
+  }
+  40% {
+    transform: translateY(0.5px);
+  }
+  60% {
+    transform: translateY(-0.5px);
+  }
+  80% {
+    transform: translateY(0.5px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-icon {
+  position: relative;
+  display: block;
+  width: 2rem;
+  height: 2rem;
+}
+
+.brand-link .logo-icon-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation-timing-function: ease-in-out-back;
+  animation-iteration-count: infinite;
+}
+
+.logo-icon-default {
+  animation-name: iconDefaultAnimation;
+  animation-duration: 3000ms;
+  z-index: 999;
+}
+
+.logo-icon-step {
+  animation: vibrate 2000ms ease infinite;
+}
+
+.brand-link .logo-text {
+  height: 1.5rem;
+}
