@@ -62,3 +62,13 @@ ol {
   margin-inline: auto;
   background-color: #f2f3ff;
 }
+
+.error-page {
+  width: min(100%, 1440px);
+  height: 100%;
+  background-color: #f2f3ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

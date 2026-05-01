@@ -1,0 +1,140 @@
+.layout {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: #f2f3ff;
+}
+
+.header {
+  padding: 2rem 1.5rem 0;
+}
+
+.header-inner {
+  width: min(100%, 1140px);
+  height: 3rem;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-inline: 0;
+}
+
+.nav {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  background-color: #ffffff;
+  border-radius: 999px;
+  padding: 1rem 3rem;
+  gap: 2.5rem;
+}
+
+.nav-link,
+.logout {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #111111;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.nav-link.active {
+  color: #1f36f5;
+}
+
+.logout {
+  color: #1f36f5;
+}
+
+.nav-link:hover,
+.logout:hover {
+  color: #5465f7;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 1rem;
+  background-color: #1f36f5;
+}
+
+.content {
+  width: min(100%, 1140px);
+  flex: 1;
+  margin-inline: auto;
+  padding: 1.5rem;
+}
+
+.footer-inner {
+  min-height: 32px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0.5rem 4rem;
+  background: #ffffff;
+}
+
+.footer-copyright {
+  color: #111111;
+  font-size: 0.625rem;
+  font-weight: 400;
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-link {
+  color: #111111;
+  font-size: 0.625rem;
+  font-weight: 400;
+}
+
+.footer-link:hover {
+  color: #1f36f5;
+}
+
+.footer-logo {
+  line-height: 1;
+  margin-left: 1rem;
+}
+
+.footer-logo-image {
+  width: 1rem;
+  height: 1rem;
+}
+
+.legal-page {
+  max-width: 760px;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 0.75rem;
+}
+
+.legal-page h1 {
+  margin-bottom: 1.5rem;
+  color: #1f36f5;
+  font-size: 2rem;
+}
+
+.legal-page h2 {
+  margin: 1.5rem 0 0.5rem;
+  color: #111111;
+  font-size: 1rem;
+}
+
+.legal-page p {
+  color: #3e3e3e;
+  font-size: 0.95rem;
+}
+
+.legal-page a {
+  color: #1f36f5;
+}
