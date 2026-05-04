@@ -1,28 +1,25 @@
 import { useUser } from "../user/user";
+import {
+  formatDistance,
+  formatDuration,
+  formatMemberDate,
+  formatNumber,
+} from "../helpers/formatters";
+import { calculateRestDays } from "../helpers/statistics";
 import "./profile.css";
 
-const formatMemberDate = (date: string) =>
-  new Intl.DateTimeFormat("fr-FR", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(date));
-
-const formatDistance = (distance: string) =>
-  new Intl.NumberFormat("fr-FR", {
-    maximumFractionDigits: 1,
-  }).format(Number(distance));
-
-const formatDuration = (minutes: number) => {
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
-
-  return `${hours}h ${remainingMinutes}min`;
-};
-
 export function ProfileInfo() {
-  const { profile, statistics } = useUser();
+  const { profile, statistics, activity } = useUser();
   const memberDate = formatMemberDate(profile.createdAt);
+  const totalCaloriesBurned = activity.reduce(
+    (total: number, session: { caloriesBurned: number }) =>
+      total + session.caloriesBurned,
+    0,
+  );
+  const restDays = calculateRestDays(
+    profile.createdAt,
+    statistics.totalSessions,
+  );
   const statCards = [
     {
       label: "Temps total couru",
@@ -30,7 +27,7 @@ export function ProfileInfo() {
     },
     {
       label: "Calories brûlées",
-      value: "25000 cal",
+      value: `${formatNumber(totalCaloriesBurned)} cal`,
     },
     {
       label: "Distance totale parcourue",
@@ -38,7 +35,7 @@ export function ProfileInfo() {
     },
     {
       label: "Nombre de jours de repos",
-      value: "9 jours",
+      value: `${restDays} jours`,
     },
     {
       label: "Nombre de sessions",

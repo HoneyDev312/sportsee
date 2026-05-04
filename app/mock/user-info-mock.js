@@ -10,7 +10,7 @@ export const userInfo = {
   },
   statistics: {
     totalDistance: "4128.7",
-    totalSessions: 684,
+    totalSessions: 484,
     totalDuration: 25410,
   },
 };

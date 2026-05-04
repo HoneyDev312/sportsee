@@ -1,18 +1,7 @@
 import { useUser } from "../user/user";
+import { formatDistance, formatMemberDate } from "../helpers/formatters";
 import handflagIcon from "./assets/handflag.svg";
 import "./dashboard.css";
-
-const formatMemberDate = (date: string) =>
-  new Intl.DateTimeFormat("fr-FR", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(date));
-
-const formatDistance = (distance: string) =>
-  new Intl.NumberFormat("fr-FR", {
-    maximumFractionDigits: 1,
-  }).format(Number(distance));
 
 export function Dashboard() {
   const { profile, statistics } = useUser();
