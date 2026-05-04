@@ -74,3 +74,167 @@
   height: 2.125rem;
   flex: 0 0 auto;
 }
+
+.dashboard-section {
+  margin-top: 4rem;
+}
+
+.dashboard-section h2,
+.dashboard-section-heading h2 {
+  color: #111111;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.dashboard-section > h2 {
+  margin-bottom: 1.75rem;
+}
+
+.dashboard-section-heading {
+  margin-bottom: 1.75rem;
+}
+
+.dashboard-section-heading p {
+  margin-top: 0.35rem;
+  color: #6e6e7a;
+  font-size: 0.875rem;
+}
+
+.dashboard-performance-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: 1.5rem;
+}
+
+.dashboard-metric-card,
+.dashboard-week-card,
+.dashboard-week-stat {
+  background: #ffffff;
+  border-radius: 0.75rem;
+}
+
+.dashboard-week-distance {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.dashboard-week-unit {
+  margin: 0;
+  color: #b6bdfc;
+  font-size: 0.75rem;
+}
+
+.kilometers {
+  color: #fcc1b6;
+}
+
+.dashboard-metric-card {
+  min-height: 19rem;
+  padding: 2rem;
+}
+
+.dashboard-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dashboard-card-header strong {
+  color: #0019ff;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.dashboard-card-header .dashboard-heart-rate {
+  color: #ff2d10;
+}
+
+.dashboard-week-result {
+  line-height: 0;
+}
+
+.dashboard-card-header p,
+.dashboard-card-header span,
+.dashboard-card-summary span,
+.dashboard-week-subtitle {
+  color: #6e6e7a;
+  font-size: 0.75rem;
+}
+
+.dashboard-card-header p {
+  margin-top: 0.5rem;
+}
+
+.dashboard-card-header > span {
+  flex: 0 0 auto;
+}
+
+.dashboard-card-summary {
+  min-height: 11rem;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.35rem;
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+  background: #f7f8ff;
+}
+
+.dashboard-card-summary p {
+  color: #1f24ff;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.dashboard-week-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 2rem;
+}
+
+.dashboard-week-card {
+  min-height: 13.5rem;
+  padding: 2rem;
+}
+
+.dashboard-week-card strong {
+  color: #1f24ff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.dashboard-week-card span {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.dashboard-week-card p {
+  margin-top: 0.75rem;
+}
+
+.dashboard-week-stats {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
+.dashboard-week-stat {
+  min-height: 5.25rem;
+  display: grid;
+  align-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+}
+
+.dashboard-week-stat strong {
+  color: #1f24ff;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.dashboard-week-stat:last-child strong {
+  color: #ff2d10;
+}

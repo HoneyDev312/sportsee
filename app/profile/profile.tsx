@@ -1,9 +1,9 @@
 import { useUser } from "../user/user";
 import {
   formatDistance,
-  formatDuration,
   formatMemberDate,
   formatNumber,
+  getDurationParts,
 } from "../helpers/formatters";
 import { calculateRestDays } from "../helpers/statistics";
 import "./profile.css";
@@ -20,26 +20,32 @@ export function ProfileInfo() {
     profile.createdAt,
     statistics.totalSessions,
   );
+  const totalDuration = getDurationParts(statistics.totalDuration);
   const statCards = [
     {
       label: "Temps total couru",
-      value: formatDuration(statistics.totalDuration),
+      mainValue: `${totalDuration.hours}h`,
+      secondaryValue: `${totalDuration.minutes}min`,
     },
     {
       label: "Calories brûlées",
-      value: `${formatNumber(totalCaloriesBurned)} cal`,
+      mainValue: formatNumber(totalCaloriesBurned),
+      secondaryValue: "cal",
     },
     {
       label: "Distance totale parcourue",
-      value: `${formatDistance(statistics.totalDistance)} km`,
+      mainValue: formatDistance(statistics.totalDistance),
+      secondaryValue: "km",
     },
     {
       label: "Nombre de jours de repos",
-      value: `${restDays} jours`,
+      mainValue: String(restDays),
+      secondaryValue: "jours",
     },
     {
       label: "Nombre de sessions",
-      value: `${statistics.totalSessions} sessions`,
+      mainValue: String(statistics.totalSessions),
+      secondaryValue: "sessions",
     },
   ];
 
@@ -95,7 +101,10 @@ export function ProfileInfo() {
           {statCards.map((stat) => (
             <article className="profile-stat-card" key={stat.label}>
               <p>{stat.label}</p>
-              <strong>{stat.value}</strong>
+              <strong>
+                {stat.mainValue}
+                <span>{stat.secondaryValue}</span>
+              </strong>
             </article>
           ))}
         </div>
