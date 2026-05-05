@@ -13,6 +13,7 @@ export type WeeklyDistance = {
 const DAYS_IN_WEEK = 7;
 const LAST_FOUR_WEEKS = 4;
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
+export const WEEKLY_SESSION_GOAL = 7;
 
 const formatDateForApi = (date: Date) => date.toISOString().slice(0, 10);
 
@@ -26,18 +27,27 @@ const getMonday = (date: Date) => {
   return monday;
 };
 
+const getLastCompletedSunday = (date: Date) => {
+  const currentMonday = getMonday(date);
+  const sunday = new Date(currentMonday);
+
+  sunday.setDate(sunday.getDate() - 1);
+
+  return sunday;
+};
+
 const parseDateOnly = (date: string) => {
   const [year, month, day] = date.split("-").map(Number);
   return new Date(year, month - 1, day);
 };
 
-export function getLastWeekRange(referenceDate = new Date()): WeekRange {
-  const currentMonday = getMonday(referenceDate);
-  const startWeek = new Date(currentMonday);
-  const endWeek = new Date(currentMonday);
+export function getLastCompletedWeekRange(
+  referenceDate = new Date(),
+): WeekRange {
+  const endWeek = getLastCompletedSunday(referenceDate);
+  const startWeek = new Date(endWeek);
 
-  startWeek.setDate(startWeek.getDate() - DAYS_IN_WEEK);
-  endWeek.setDate(endWeek.getDate() + DAYS_IN_WEEK - 1);
+  startWeek.setDate(startWeek.getDate() - DAYS_IN_WEEK + 1);
 
   return {
     startWeek: formatDateForApi(startWeek),
@@ -45,13 +55,13 @@ export function getLastWeekRange(referenceDate = new Date()): WeekRange {
   };
 }
 
-export function getLastFourWeeksRange(referenceDate = new Date()): WeekRange {
-  const currentMonday = getMonday(referenceDate);
-  const startWeek = new Date(currentMonday);
-  const endWeek = new Date(currentMonday);
+export function getLastFourCompletedCalendarWeeksRange(
+  referenceDate = new Date(),
+): WeekRange {
+  const endWeek = getLastCompletedSunday(referenceDate);
+  const startWeek = new Date(endWeek);
 
-  startWeek.setDate(startWeek.getDate() - DAYS_IN_WEEK * (LAST_FOUR_WEEKS - 1));
-  endWeek.setDate(endWeek.getDate() + DAYS_IN_WEEK - 1);
+  startWeek.setDate(startWeek.getDate() - DAYS_IN_WEEK * LAST_FOUR_WEEKS + 1);
 
   return {
     startWeek: formatDateForApi(startWeek),
@@ -85,4 +95,33 @@ export function formatActivityDistanceByWeek(
   });
 
   return weeklyDistance;
+}
+
+export function getTotalDistance(activity: UserActivity[]) {
+  return activity.reduce((total, session) => total + session.distance, 0);
+}
+
+export function getAverageDistance(activity: UserActivity[]) {
+  return activity.length > 0 ? getTotalDistance(activity) / activity.length : 0;
+}
+
+export function getAverageHeartRate(activity: UserActivity[]) {
+  if (activity.length === 0) {
+    return 0;
+  }
+
+  const totalHeartRate = activity.reduce(
+    (total, session) => total + session.heartRate.average,
+    0,
+  );
+
+  return Math.round(totalHeartRate / activity.length);
+}
+
+export function getTotalDuration(activity: UserActivity[]) {
+  return activity.reduce((total, session) => total + session.duration, 0);
+}
+
+export function getRemainingWeeklySessions(activity: UserActivity[]) {
+  return Math.max(WEEKLY_SESSION_GOAL - activity.length, 0);
 }

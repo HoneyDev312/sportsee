@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getUserActivity } from "../features/userActivity/api";
-import { getLastFourWeeksRange } from "../features/userActivity/domain";
+import { getLastFourCompletedCalendarWeeksRange } from "../features/userActivity/domain";
 import type { UserActivity } from "../features/userActivity/types";
 import { ApiError } from "../services/api";
 
@@ -10,7 +10,7 @@ type UseUserActivityOptions = {
 };
 
 export function useUserActivity(options: UseUserActivityOptions = {}) {
-  const defaultRange = useMemo(() => getLastFourWeeksRange(), []);
+  const defaultRange = useMemo(() => getLastFourCompletedCalendarWeeksRange(), []);
   const startWeek = options.startWeek ?? defaultRange.startWeek;
   const endWeek = options.endWeek ?? defaultRange.endWeek;
   const [activity, setActivity] = useState<UserActivity[]>([]);
