@@ -1,5 +1,3 @@
-import { useCallback } from "react";
-
 // Récupère la valeur d'un cookie par son nom.
 export const getCookieValue = (name: string) => {
   if (typeof document === "undefined") return null;

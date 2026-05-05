@@ -3,11 +3,6 @@ import type { PieLabelRenderProps } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
 import "./pie.css";
 
-const data2 = [
-  { name: "réalisées", value: 50, fill: "#0B23F4" },
-  { name: "restantes", value: 50, fill: "#B6BDFC" },
-];
-
 function renderPieLabel({
   cx,
   cy,
@@ -33,7 +28,16 @@ function renderPieLabel({
   );
 }
 
-export const MyPieChart = () => {
+type MyPieChartProps = {
+  completed: number;
+  remaining: number;
+};
+
+export const MyPieChart = ({ completed, remaining }: MyPieChartProps) => {
+  const data = [
+    { name: "réalisées", value: completed, fill: "#0B23F4" },
+    { name: "restantes", value: remaining, fill: "#B6BDFC" },
+  ];
   return (
     <div className="dashboard-pie-chart-wrapper">
       <PieChart
@@ -46,7 +50,7 @@ export const MyPieChart = () => {
         responsive
       >
         <Pie
-          data={data2}
+          data={data}
           dataKey="value"
           cx="50%"
           cy="50%"

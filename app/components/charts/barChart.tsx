@@ -1,25 +1,24 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
+  Tooltip,
+} from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
+import type { UserActivity } from "~/features/userActivity/types";
+import { formatActivityDistanceByWeek } from "~/features/userActivity/domain";
 
-export const MyBarChart = () => {
-  const data = [
-    {
-      name: "S1",
-      Km: 10,
-    },
-    {
-      name: "S2",
-      Km: 21,
-    },
-    {
-      name: "S3",
-      Km: 4,
-    },
-    {
-      name: "S4",
-      Km: 14,
-    },
-  ];
+type MyBarChartProps = {
+  activity: UserActivity[];
+  startWeek: string;
+};
+
+export const MyBarChart = ({ activity, startWeek }: MyBarChartProps) => {
+  const data = formatActivityDistanceByWeek(activity, startWeek);
+
   return (
     <BarChart
       style={{
@@ -39,6 +38,7 @@ export const MyBarChart = () => {
         align="left"
         wrapperStyle={{ bottom: -8, left: 16 }}
       />
+      <Tooltip />
       <Bar
         dataKey="Km"
         fill="#B6BDFC"
