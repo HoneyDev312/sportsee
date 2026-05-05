@@ -64,6 +64,8 @@
 .content {
   width: min(100%, 1140px);
   flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   margin-inline: auto;
   padding: 1.5rem;
 }

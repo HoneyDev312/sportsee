@@ -30,3 +30,8 @@ export const formatShortDate = (date: string) =>
     day: "2-digit",
     month: "short",
   }).format(new Date(date));
+
+export const formatDayOfWeek = (date: string) =>
+  new Intl.DateTimeFormat("fr-FR", {
+    weekday: "short",
+  }).format(new Date(date));

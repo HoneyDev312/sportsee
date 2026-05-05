@@ -6,6 +6,9 @@ import {
 } from "../helpers/formatters";
 import handflagIcon from "./assets/handflag.svg";
 import "./dashboard.css";
+import { MyPieChart } from "../components/charts/pie";
+import { MyBarChart } from "~/components/charts/barChart";
+import { MyComposedChart } from "~/components/charts/composedChart";
 
 export function Dashboard() {
   const { profile, statistics, activity } = useUser();
@@ -82,8 +85,7 @@ export function Dashboard() {
             </header>
 
             <div className="dashboard-card-summary">
-              <p>{formatDistance(totalRecentDistance)} km</p>
-              <span>Total sur les 4 dernières sessions</span>
+              <MyBarChart />
             </div>
           </article>
 
@@ -99,8 +101,7 @@ export function Dashboard() {
             </header>
 
             <div className="dashboard-card-summary">
-              <p>{averageHeartRate} BPM</p>
-              <span>Moyenne sur les dernières activités</span>
+              <MyComposedChart />
             </div>
           </article>
         </div>
@@ -121,6 +122,7 @@ export function Dashboard() {
             <p className="dashboard-week-subtitle">
               Courses hebdomadaire réalisées
             </p>
+            <MyPieChart />
           </article>
 
           <div className="dashboard-week-stats">

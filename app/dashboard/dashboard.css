@@ -1,5 +1,6 @@
 .dashboard-page {
   padding-top: 2rem;
+  padding-bottom: 5rem;
 }
 
 .dashboard-profile-card {
@@ -180,7 +181,6 @@
   gap: 0.35rem;
   margin-top: 2rem;
   border-radius: 0.5rem;
-  background: #f7f8ff;
 }
 
 .dashboard-card-summary p {
