@@ -26,7 +26,6 @@ export function useUserActivity(options: UseUserActivityOptions = {}) {
       setActivity(data);
       return data;
     } catch (error) {
-      console.error("Erreur de récupération de l'activité:", error);
       setActivity([]);
       setError(
         error instanceof ApiError && error.status === 401

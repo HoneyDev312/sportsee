@@ -122,6 +122,10 @@ export function getTotalDuration(activity: UserActivity[]) {
   return activity.reduce((total, session) => total + session.duration, 0);
 }
 
+export function getTotalCaloriesBurned(activity: UserActivity[]) {
+  return activity.reduce((total, session) => total + session.caloriesBurned, 0);
+}
+
 export function getRemainingWeeklySessions(activity: UserActivity[]) {
   return Math.max(WEEKLY_SESSION_GOAL - activity.length, 0);
 }

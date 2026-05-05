@@ -31,7 +31,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Connecte l'utilisateur : on écrit le cookie et on met à jour le state.
   const login = useCallback(
     (newToken: string) => {
-      console.log("AuthProvider login", { newTokenPresent: Boolean(newToken) });
       setCookieValue(COOKIE_NAME, newToken, 7);
       setToken(newToken);
       navigate("/dashboard");

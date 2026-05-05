@@ -17,7 +17,6 @@ export function useUserInfo() {
       setUserInfo(data);
       return data;
     } catch (error) {
-      console.error("Erreur de récupération du profil:", error);
       setUserInfo(null);
       setError(
         error instanceof ApiError && error.status === 401

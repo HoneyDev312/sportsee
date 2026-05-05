@@ -1,5 +1,6 @@
-// URL de base de l'API backend. Tous les endpoints seront ajoutés après ce préfixe.
-const API_BASE_URL = "http://localhost:8000/api";
+// URL de base de l'API backend. Peut être surchargée avec VITE_API_BASE_URL.
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000/api";
 
 // Étend les options natives de fetch pour accepter aussi un objet JS en body.
 type ApiRequestOptions = Omit<RequestInit, "body"> & {

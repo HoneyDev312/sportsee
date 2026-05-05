@@ -1,46 +1,25 @@
 import "./signin.css";
 import runnersImg from "./assets/runners.jpg";
-import { useState } from "react";
-import { useAuth } from "../../hooks/auth";
-import { loginUser } from "../../features/auth/api";
-import { ApiError } from "../../services/api";
 import { Logo } from "~/components/logo/logo";
+import { useSignin } from "~/hooks/signin";
 
 export function Connexion() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const { login } = useAuth();
-  const isFormValid = username.trim() !== "" && password.trim() !== "";
+  const {
+    username,
+    password,
+    isLoading,
+    errorMessage,
+    usernameError,
+    passwordError,
+    isFormValid,
+    setUsername,
+    setPassword,
+    submitSignin,
+  } = useSignin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isFormValid || isLoading) {
-      return;
-    }
-
-    setIsLoading(true);
-    setErrorMessage(null);
-
-    try {
-      const data = await loginUser({ username, password });
-
-      if (!data.token) {
-        throw new Error("Token de connexion manquant.");
-      }
-
-      login(data.token);
-    } catch (error) {
-      console.error("Erreur de connexion:", error);
-      setErrorMessage(
-        error instanceof ApiError && error.status === 401
-          ? "Identifiants incorrects."
-          : "Connexion impossible pour le moment. Réessayez dans un instant.",
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    await submitSignin();
   };
 
   return (
@@ -65,8 +44,17 @@ export function Connexion() {
                   required
                   value={username}
                   disabled={isLoading}
+                  aria-invalid={Boolean(usernameError)}
+                  aria-describedby={
+                    usernameError ? "username-error" : undefined
+                  }
                   onChange={(e) => setUsername(e.target.value)}
                 />
+                {usernameError && (
+                  <p className="field-error" id="username-error">
+                    {usernameError}
+                  </p>
+                )}
               </div>
 
               <div className="field">
@@ -79,8 +67,17 @@ export function Connexion() {
                   required
                   value={password}
                   disabled={isLoading}
+                  aria-invalid={Boolean(passwordError)}
+                  aria-describedby={
+                    passwordError ? "password-error" : undefined
+                  }
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                {passwordError && (
+                  <p className="field-error" id="password-error">
+                    {passwordError}
+                  </p>
+                )}
               </div>
 
               {errorMessage && (

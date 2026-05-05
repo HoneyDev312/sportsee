@@ -32,7 +32,6 @@ export function Connexion() {
 
       login(data.token);
     } catch (error) {
-      console.error("Erreur de connexion:", error);
       setErrorMessage(
         error instanceof ApiError && error.status === 401
           ? "Identifiants incorrects."
