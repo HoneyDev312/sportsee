@@ -1,9 +1,16 @@
-export const formatMemberDate = (date: string) =>
-  new Intl.DateTimeFormat("fr-FR", {
+const isValidDate = (date: string) => !Number.isNaN(new Date(date).getTime());
+
+export const formatMemberDate = (date: string) => {
+  if (!isValidDate(date)) {
+    return "date inconnue";
+  }
+
+  return new Intl.DateTimeFormat("fr-FR", {
     day: "2-digit",
     month: "long",
     year: "numeric",
   }).format(new Date(date));
+};
 
 export const formatDistance = (distance: string | number) =>
   new Intl.NumberFormat("fr-FR", {
@@ -25,13 +32,23 @@ export const getDurationParts = (minutes: number) => ({
 export const formatNumber = (value: number) =>
   new Intl.NumberFormat("fr-FR").format(value);
 
-export const formatShortDate = (date: string) =>
-  new Intl.DateTimeFormat("fr-FR", {
+export const formatShortDate = (date: string) => {
+  if (!isValidDate(date)) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat("fr-FR", {
     day: "2-digit",
     month: "short",
   }).format(new Date(date));
+};
 
-export const formatDayOfWeek = (date: string) =>
-  new Intl.DateTimeFormat("fr-FR", {
+export const formatDayOfWeek = (date: string) => {
+  if (!isValidDate(date)) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat("fr-FR", {
     weekday: "short",
   }).format(new Date(date));
+};

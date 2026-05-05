@@ -10,11 +10,11 @@ import {
   Legend,
 } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
-import { useUser } from "~/context/user";
-import { formatDayOfWeek } from "~/helpers/formatters";
+import { formatDayOfWeek } from "../../helpers/formatters";
+import { userActivity } from "../../test/user-activity-mock";
 
 export const MyComposedChart = () => {
-  const { activity } = useUser();
+  const activity = userActivity;
 
   const data = activity.map(
     (session: {

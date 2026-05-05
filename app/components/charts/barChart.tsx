@@ -1,6 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
-import { useUser } from "~/context/user";
 
 export const MyBarChart = () => {
   const data = [

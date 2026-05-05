@@ -1,4 +1,5 @@
-import { useUser } from "../../context/user";
+import { useUserInfo } from "../../hooks/userInfo";
+import { userActivity } from "../../test/user-activity-mock";
 import {
   formatDistance,
   formatMemberDate,
@@ -11,7 +12,21 @@ import { MyBarChart } from "~/components/charts/barChart";
 import { MyComposedChart } from "~/components/charts/composedChart";
 
 export function Dashboard() {
-  const { profile, statistics, activity } = useUser();
+  const { profile, statistics, isLoading, error } = useUserInfo();
+  const activity = userActivity;
+
+  if (isLoading) {
+    return <main className="dashboard-page">Chargement du dashboard...</main>;
+  }
+
+  if (error) {
+    return <main className="dashboard-page">{error}</main>;
+  }
+
+  if (!profile || !statistics) {
+    return <main className="dashboard-page">Dashboard indisponible.</main>;
+  }
+
   const latestSessions = activity.slice(-4);
   const totalRecentDistance = latestSessions.reduce(
     (total: number, session: { distance: number }) => total + session.distance,

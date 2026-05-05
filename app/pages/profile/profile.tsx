@@ -1,4 +1,5 @@
-import { useUser } from "../../context/user";
+import { useUserInfo } from "~/hooks/userInfo";
+import { userActivity } from "../../test/user-activity-mock";
 import {
   formatDistance,
   formatMemberDate,
@@ -9,7 +10,21 @@ import { calculateRestDays } from "../../helpers/statistics";
 import "./profile.css";
 
 export function ProfileInfo() {
-  const { profile, statistics, activity } = useUser();
+  const { profile, statistics, isLoading, error } = useUserInfo();
+  const activity = userActivity;
+
+  if (isLoading) {
+    return <main className="profile-page">Chargement du profil...</main>;
+  }
+
+  if (error) {
+    return <main className="profile-page">{error}</main>;
+  }
+
+  if (!profile || !statistics) {
+    return <main className="profile-page">Profil indisponible.</main>;
+  }
+
   const memberDate = formatMemberDate(profile.createdAt);
   const totalCaloriesBurned = activity.reduce(
     (total: number, session: { caloriesBurned: number }) =>
