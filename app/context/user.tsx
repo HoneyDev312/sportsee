@@ -1,12 +1,13 @@
 import { createContext, useContext, useMemo } from "react";
-import { userInfo } from "../mock/user-info-mock.js";
-import { userActivity } from "../mock/user-activity-mock.js";
-
+import { userInfo } from "../test/user-info-mock";
+import { userActivity } from "../test/user-activity-mock";
+import type { UserProfile, UserStatistics } from "../features/userInfo/types";
+import type { UserActivity } from "../features/userActivity/types";
 // Type du contexte utilisateur : profil, statistiques et activités.
 type UserContextType = {
-  profile: (typeof userInfo)["profile"];
-  statistics: (typeof userInfo)["statistics"];
-  activity: typeof userActivity;
+  profile: UserProfile;
+  statistics: UserStatistics;
+  activity: UserActivity[];
 };
 
 // Création du contexte React pour les données utilisateur.

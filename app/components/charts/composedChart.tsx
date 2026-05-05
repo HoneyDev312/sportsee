@@ -10,7 +10,7 @@ import {
   Legend,
 } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
-import { useUser } from "~/user/user";
+import { useUser } from "~/context/user";
 import { formatDayOfWeek } from "~/helpers/formatters";
 
 export const MyComposedChart = () => {

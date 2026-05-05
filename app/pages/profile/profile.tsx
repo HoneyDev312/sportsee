@@ -1,11 +1,11 @@
-import { useUser } from "../user/user";
+import { useUser } from "../../context/user";
 import {
   formatDistance,
   formatMemberDate,
   formatNumber,
   getDurationParts,
-} from "../helpers/formatters";
-import { calculateRestDays } from "../helpers/statistics";
+} from "../../helpers/formatters";
+import { calculateRestDays } from "../../helpers/statistics";
 import "./profile.css";
 
 export function ProfileInfo() {

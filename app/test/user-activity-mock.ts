@@ -1,4 +1,6 @@
-export const userActivity = [
+import type { UserActivity } from "../features/userActivity/types";
+
+export const userActivity: UserActivity[] = [
   {
     date: "2026-04-22",
     distance: 5.8,

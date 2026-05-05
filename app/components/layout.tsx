@@ -1,6 +1,6 @@
 import { Link, NavLink, Outlet, redirect } from "react-router";
 import type { Route } from "../+types/root";
-import { useAuth } from "../auth/auth";
+import { useAuth } from "../hooks/auth";
 import { Logo } from "./logo/logo";
 import "./layout.css";
 import iconLogoDefault from "./logo/assets/iconLogoDefault.svg";
@@ -18,8 +18,6 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function Layout() {
   const { logout } = useAuth();
-  const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
-    `nav-link${isActive ? " active" : ""}`;
 
   return (
     <div className="container layout">
@@ -28,10 +26,10 @@ export default function Layout() {
           <Logo />
 
           <nav className="nav" aria-label="Navigation principale">
-            <NavLink to="/dashboard" className={navLinkClassName}>
+            <NavLink to="/dashboard" className="nav-link">
               Dashboard
             </NavLink>
-            <NavLink to="/profile" className={navLinkClassName}>
+            <NavLink to="/profile" className="nav-link">
               Mon profil
             </NavLink>
             <div className="nav-divider" aria-hidden="true" />

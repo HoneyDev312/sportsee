@@ -1,12 +1,12 @@
-import { useUser } from "../user/user";
+import { useUser } from "../../context/user";
 import {
   formatDistance,
   formatMemberDate,
   formatShortDate,
-} from "../helpers/formatters";
+} from "../../helpers/formatters";
 import handflagIcon from "./assets/handflag.svg";
 import "./dashboard.css";
-import { MyPieChart } from "../components/charts/pie";
+import { MyPieChart } from "../../components/charts/pie";
 import { MyBarChart } from "~/components/charts/barChart";
 import { MyComposedChart } from "~/components/charts/composedChart";
 

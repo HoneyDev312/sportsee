@@ -1,11 +1,10 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
+import {
+  getCookieValue,
+  setCookieValue,
+  deleteCookieValue,
+} from "../features/auth/domain";
 
 // Type du contexte d'authentification : le token, l'état de connexion,
 // et les méthodes pour se connecter / se déconnecter.
@@ -17,29 +16,9 @@ type AuthContextType = {
 };
 
 // Création du contexte React qui sera partagé dans l'application.
-const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 const COOKIE_NAME = "authToken";
-
-// Récupère la valeur d'un cookie par son nom.
-const getCookieValue = (name: string) => {
-  if (typeof document === "undefined") return null;
-  const cookie = document.cookie;
-  const match = cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
-  return match ? decodeURIComponent(match[1]) : null;
-};
-
-// Écrit un cookie sécurisé avec expiration.
-const setCookieValue = (name: string, value: string, days: number) => {
-  const expires = new Date();
-  expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-  document.cookie = `${name}=${encodeURIComponent(value)};expires=${expires.toUTCString()};path=/;secure;samesite=strict`;
-};
-
-// Supprime un cookie en le réinitialisant avec une date d'expiration passée.
-const deleteCookieValue = (name: string) => {
-  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;`;
-};
 
 // Stocke le token, expose login/logout et garde le composant enfant accessible.
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -52,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Connecte l'utilisateur : on écrit le cookie et on met à jour le state.
   const login = useCallback(
     (newToken: string) => {
+      console.log("AuthProvider login", { newTokenPresent: Boolean(newToken) });
       setCookieValue(COOKIE_NAME, newToken, 7);
       setToken(newToken);
       navigate("/dashboard");
@@ -73,13 +53,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-// Hook personnalisé pour accéder facilement au contexte auth.
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within AuthProvider");
-  }
-  return context;
 }

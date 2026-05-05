@@ -1,4 +1,6 @@
-export const userInfo = {
+import type { UserInfo } from "~/features/userInfo/types";
+
+export const userInfo: UserInfo = {
   profile: {
     firstName: "Michaël",
     lastName: "Peltier",

@@ -6,8 +6,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { AuthProvider } from "./auth/auth";
-import { UserProvider } from "./user/user";
+import { AuthProvider } from "./context/auth";
+import { UserProvider } from "./context/user";
 
 import type { Route } from "./+types/root";
 import "./app.css";
