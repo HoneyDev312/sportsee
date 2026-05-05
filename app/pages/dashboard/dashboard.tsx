@@ -20,23 +20,35 @@ export function Dashboard() {
   const { profile, statistics, isLoading, error } = useUserInfo();
 
   const { startWeek: startLastWeek, endWeek: endLastWeek } = getLastWeekRange();
-  const { activity: lastWeekActivity } = useUserActivity({
+  const {
+    activity: lastWeekActivity,
+    isLoading: isLastWeekLoading,
+    error: lastWeekError,
+  } = useUserActivity({
     startWeek: startLastWeek,
     endWeek: endLastWeek,
   });
 
   const { startWeek, endWeek } = getLastFourWeeksRange();
-  const { activity: fourWeeksActivity } = useUserActivity({
+  const {
+    activity: fourWeeksActivity,
+    isLoading: isFourWeeksLoading,
+    error: fourWeeksError,
+  } = useUserActivity({
     startWeek: startWeek,
     endWeek: endWeek,
   });
 
-  if (isLoading) {
+  if (isLoading || isLastWeekLoading || isFourWeeksLoading) {
     return <main className="dashboard-page">Chargement du dashboard...</main>;
   }
 
-  if (error) {
-    return <main className="dashboard-page">{error}</main>;
+  if (error || lastWeekError || fourWeeksError) {
+    return (
+      <main className="dashboard-page">
+        {error ?? lastWeekError ?? fourWeeksError}
+      </main>
+    );
   }
 
   if (!profile || !statistics) {
@@ -48,15 +60,21 @@ export function Dashboard() {
     0,
   );
 
-  const averageRecentDistance = totalRecentDistance / fourWeeksActivity.length;
+  const averageRecentDistance =
+    fourWeeksActivity.length > 0
+      ? totalRecentDistance / fourWeeksActivity.length
+      : 0;
 
-  const averageHeartRate = Math.round(
-    lastWeekActivity.reduce(
-      (total: number, session: { heartRate: { average: number } }) =>
-        total + session.heartRate.average,
-      0,
-    ) / lastWeekActivity.length,
-  );
+  const averageHeartRate =
+    lastWeekActivity.length > 0
+      ? Math.round(
+          lastWeekActivity.reduce(
+            (total: number, session: { heartRate: { average: number } }) =>
+              total + session.heartRate.average,
+            0,
+          ) / lastWeekActivity.length,
+        )
+      : 0;
 
   const weeklyDuration = lastWeekActivity.reduce(
     (total: number, session: { duration: number }) => total + session.duration,
@@ -68,16 +86,11 @@ export function Dashboard() {
     0,
   );
 
-  const weeklyFirstSession = lastWeekActivity[0];
-  const weeklyLastSession = lastWeekActivity[lastWeekActivity.length - 1];
-  const weeklyLabel = `${formatShortDate(weeklyFirstSession.date)} - ${formatShortDate(
-    weeklyLastSession.date,
+  const weeklyLabel = `${formatShortDate(startLastWeek)} - ${formatShortDate(
+    endLastWeek,
   )}`;
-
-  const fourWeeksFirstSession = fourWeeksActivity[0];
-  const fourWeeksLastSession = fourWeeksActivity[fourWeeksActivity.length - 1];
-  const fourWeeksLabel = `${formatShortDate(fourWeeksFirstSession.date)} - ${formatShortDate(
-    fourWeeksLastSession.date,
+  const fourWeeksLabel = `${formatShortDate(startWeek)} - ${formatShortDate(
+    endWeek,
   )}`;
 
   return (
