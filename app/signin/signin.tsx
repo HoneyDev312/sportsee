@@ -2,43 +2,44 @@ import "./signin.css";
 import runnersImg from "./assets/runners.jpg";
 import { useState } from "react";
 import { useAuth } from "../hooks/auth";
+import { loginUser } from "../features/auth/api";
+import { ApiError } from "../services/api";
 import { Logo } from "~/components/logo/logo";
 
 export function Connexion() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { login } = useAuth();
   const isFormValid = username.trim() !== "" && password.trim() !== "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isFormValid) {
+    if (!isFormValid || isLoading) {
       return;
     }
 
-    console.log("Signin submit", { username, password });
+    setIsLoading(true);
+    setErrorMessage(null);
 
     try {
-      const response = await fetch("http://localhost:8000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const data = await loginUser({ username, password });
 
-      console.log("Signin response status", response.status);
-
-      const data = await response.json().catch(() => null);
-      console.log("Signin response data", data);
-
-      if (response.ok && data?.token) {
-        login(data.token);
-      } else {
-        console.error("Login failed", response.status, data);
-        alert("Erreur de connexion: vérifie tes identifiants ou l’API");
+      if (!data.token) {
+        throw new Error("Token de connexion manquant.");
       }
+
+      login(data.token);
     } catch (error) {
       console.error("Erreur de connexion:", error);
-      alert("Erreur de connexion");
+      setErrorMessage(
+        error instanceof ApiError && error.status === 401
+          ? "Identifiants incorrects."
+          : "Connexion impossible pour le moment. Réessayez dans un instant.",
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -63,6 +64,7 @@ export function Connexion() {
                   autoComplete="username"
                   required
                   value={username}
+                  disabled={isLoading}
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
@@ -76,12 +78,19 @@ export function Connexion() {
                   autoComplete="current-password"
                   required
                   value={password}
+                  disabled={isLoading}
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
-              <button type="submit" disabled={!isFormValid}>
-                Se connecter
+              {errorMessage && (
+                <p className="auth-error" role="alert">
+                  {errorMessage}
+                </p>
+              )}
+
+              <button type="submit" disabled={!isFormValid || isLoading}>
+                {isLoading ? "Connexion..." : "Se connecter"}
               </button>
             </form>
 

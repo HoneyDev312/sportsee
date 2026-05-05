@@ -67,6 +67,22 @@
   border-color: #1f36f5;
 }
 
+.field input:disabled {
+  color: #777;
+  background: #f5f6fb;
+  cursor: not-allowed;
+}
+
+.auth-error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff1f2;
+  color: #b42318;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
 .auth-form button {
   height: 46px;
   border: 0;
