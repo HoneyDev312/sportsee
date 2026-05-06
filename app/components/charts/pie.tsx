@@ -13,10 +13,10 @@ function renderPieLabel({
   value,
 }: PieLabelRenderProps) {
   const isCompleted = name === "réalisées";
-  const radius = Number(outerRadius);
+  const radius = Number(outerRadius) + (isCompleted ? 64 : 24);
   const angle = -Number(midAngle) * (Math.PI / 180);
-  const x = Number(cx) + radius * Math.cos(angle) + (isCompleted ? -56 : 0);
-  const y = Number(cy) + radius * Math.sin(angle) + (isCompleted ? 20 : -20);
+  const x = Number(cx) + radius * Math.cos(angle);
+  const y = Number(cy) + radius * Math.sin(angle);
 
   return (
     <g>

@@ -46,7 +46,9 @@ export function DashboardWeeklySection({
           <article className="dashboard-week-stat">
             <p className="dashboard-week-subtitle">Durée d'activité</p>
             <span className="dashboard-week-distance">
-              <strong>{lastCompletedWeekDuration}</strong>
+              <strong className="dashboard-week-result">
+                {lastCompletedWeekDuration}
+              </strong>
               <p className="dashboard-week-unit">minutes</p>
             </span>
           </article>
